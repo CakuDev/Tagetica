@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TwitchChat;
+using TMPro;
+using UnityEngine.UI;
 
 public class TwitchLoginController : MonoBehaviour
 {
-    [SerializeField] private string twitchUsername;
+    [SerializeField] private TMP_InputField twitchUserInput;
     [SerializeField] private TwitchSettings twitchSettings;
-    [SerializeField] private GameController gameController;
-
-    void Start()
-    {
-        LoginIntoChat();
-    }
+    [SerializeField] private Button playButton;
 
     public void LoginIntoChat()
     {
-        TwitchController.Login(twitchUsername, twitchSettings);
+        playButton.interactable = false;
+        TwitchController.Login(twitchUserInput.text, twitchSettings);
         TwitchController.onChannelJoined += OnChannelJoined;
     }
 
@@ -28,6 +26,7 @@ public class TwitchLoginController : MonoBehaviour
 
     private void ChangeGameStatus()
     {
-        gameController.ChangeGameStatus(GameStatus.START_PLAYING);
+        playButton.interactable = true;
+        // TODO: Disable loading canvas
     }
 }

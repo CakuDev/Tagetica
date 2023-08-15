@@ -11,7 +11,7 @@ public class TimerController : MonoBehaviour
     {
         // Int value used to avoid 1:60 format
         int timerFormat = (int)timer;
-        timerText.text = $"{timerFormat / 60}:{timer % 60:00}";
+        timerText.text = $"{timerFormat / 60}:{timerFormat % 60:00}";
     }
 
     public void EndGame()

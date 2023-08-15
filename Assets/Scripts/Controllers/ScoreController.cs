@@ -14,4 +14,9 @@ public class ScoreController : MonoBehaviour
         Score += points;
         scoreText.text = Score.ToString();
     }
+
+    public void ResetScore()
+    {
+        Score = 0;
+    }
 }
