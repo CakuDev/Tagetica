@@ -6,23 +6,21 @@ public class TargetSpawnerBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Animator targetContainer;
-    [SerializeField] private float timeToHide = 15f;
-    [SerializeField] private int orderInLayer = 45;
+    [SerializeField] private TimerBehaviour timerBehaviour;
 
     public bool HasTarget { get; private set; } = false;
 
     public void SpawnTarget()
     {
         GameObject target = Instantiate(targetPrefab, targetContainer.transform.position, targetContainer.transform.rotation, targetContainer.transform);
-        // Set the order in layer to render correctly
-        target.GetComponent<SpriteRenderer>().sortingOrder = orderInLayer;
         target.GetComponent<TargetBehaviour>().TargetSpawnerBehaviour = this;
         targetContainer.SetTrigger("spawn");
         HasTarget = true;
-        Invoke(nameof(HideTarget), timeToHide);
+
+        timerBehaviour.InitTimer();
     }
 
-    private void HideTarget()
+    public void HideTarget()
     {
         if(HasTarget)
         {
@@ -34,6 +32,7 @@ public class TargetSpawnerBehaviour : MonoBehaviour
     {
         HasTarget = false;
         targetContainer.SetTrigger("hide");
+        timerBehaviour.StopTimer();
     }
 
     private void OnDrawGizmos()

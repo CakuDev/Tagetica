@@ -10,11 +10,16 @@ public class TwitchLoginController : MonoBehaviour
     [SerializeField] private TMP_InputField twitchUserInput;
     [SerializeField] private TwitchSettings twitchSettings;
     [SerializeField] private Button playButton;
+    [SerializeField] private Button connectButton;
+
+    public string Username { get; private set; }
 
     public void LoginIntoChat()
     {
         playButton.interactable = false;
-        TwitchController.Login(twitchUserInput.text, twitchSettings);
+        connectButton.interactable = false;
+        Username = twitchUserInput.text;
+        TwitchController.Login(Username, twitchSettings);
         TwitchController.onChannelJoined += OnChannelJoined;
     }
 
@@ -27,6 +32,12 @@ public class TwitchLoginController : MonoBehaviour
     private void ChangeGameStatus()
     {
         playButton.interactable = true;
+        connectButton.interactable = true;
         // TODO: Disable loading canvas
+    }
+
+    private void OnDestroy()
+    {
+        TwitchController.onChannelJoined -= OnChannelJoined;
     }
 }

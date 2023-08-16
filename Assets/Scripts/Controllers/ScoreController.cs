@@ -7,7 +7,7 @@ public class ScoreController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
     
-    private int Score = 0;
+    public int Score { get; private set; } = 0;
 
     public void UpdateScore(int points)
     {
@@ -18,5 +18,6 @@ public class ScoreController : MonoBehaviour
     public void ResetScore()
     {
         Score = 0;
+        scoreText.text = "0";
     }
 }

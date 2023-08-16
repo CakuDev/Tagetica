@@ -5,12 +5,13 @@ using UnityEngine.Events;
 
 public class GameController : MonoBehaviour
 {
-    private GameStatus gameStatus;
     [field: SerializeField] UnityEvent onStarting;
     [field: SerializeField] UnityEvent onStartPlaying;
     [field: SerializeField] UnityEvent onPaused;
     [field: SerializeField] UnityEvent onResumePlaying;
     [field: SerializeField] UnityEvent onEndGame;
+
+    private GameStatus gameStatus;
 
     public void ChangeGameStatus(GameStatus newGameStatus)
     {

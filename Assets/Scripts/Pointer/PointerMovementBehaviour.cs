@@ -20,11 +20,7 @@ public class PointerMovementBehaviour : MonoBehaviour
     // Dictionary with the current input for each user
     private readonly Dictionary<string, string> usersInput = new();
     private Vector3 direction = Vector3.zero;
-
-    void Start()
-    {
-        TwitchController.onTwitchMessageReceived += CheckInputsOnMessage;
-    }
+    private bool shouldMove = false;
 
     private void OnDestroy()
     {
@@ -33,7 +29,7 @@ public class PointerMovementBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePointer();
+        if (shouldMove) MovePointer();
     }
 
     private void CheckInputsOnMessage(Chatter chatter)
@@ -114,5 +110,25 @@ public class PointerMovementBehaviour : MonoBehaviour
     private void MovePointer()
     {
         pointerRb.AddForce(speed * Time.deltaTime * direction, ForceMode2D.Impulse);
+    }
+
+    public void EnableMovement()
+    {
+        TwitchController.onTwitchMessageReceived += CheckInputsOnMessage;
+        shouldMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        TwitchController.onTwitchMessageReceived -= CheckInputsOnMessage;
+        shouldMove = false;
+        direction = Vector3.zero;
+        transform.position = Vector3.zero;
+        pointerRb.velocity = Vector2.zero;
+        usersInput.Clear(); 
+        inputCounters[Direction.Up] = 0;
+        inputCounters[Direction.Down] = 0;
+        inputCounters[Direction.Left] = 0;
+        inputCounters[Direction.Right] = 0;
     }
 }

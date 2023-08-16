@@ -15,4 +15,12 @@ public class TargetSpawnersController : MonoBehaviour
             targetSpawnersNoActive[index].SpawnTarget();
         }
     }
+
+    public void HideAllTargets()
+    {
+        foreach(TargetSpawnerBehaviour targetSpawner in targetSpawners)
+        {
+            targetSpawner.HideTarget();
+        }
+    }
 }
