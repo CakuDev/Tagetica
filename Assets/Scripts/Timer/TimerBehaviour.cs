@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TimerBehaviour : MonoBehaviour
 {
-    [SerializeField] private int totalTime = 120;
+    [field: SerializeField] public int TotalTime { get; private set; } = 120;
     [SerializeField] private UnityEvent<float> onTimerDecreasing;
     [SerializeField] private UnityEvent onEndTimer;
 
@@ -31,7 +31,7 @@ public class TimerBehaviour : MonoBehaviour
     public void InitTimer()
     {
         isTimerActive = true;
-        timer = totalTime;
+        timer = TotalTime;
     }
 
     public void StopTimer()

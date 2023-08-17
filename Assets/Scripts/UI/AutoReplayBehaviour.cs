@@ -7,12 +7,6 @@ public class AutoReplayBehaviour : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TimerBehaviour timerBehaviour;
-    [SerializeField] private GameController gameController;
-
-    private void OnEnable()
-    {
-        timerBehaviour.InitTimer();
-    }
 
     public void UpdateTimerText(float timer)
     {
@@ -22,8 +16,9 @@ public class AutoReplayBehaviour : MonoBehaviour
         timerText.text = timerFormat.ToString();
     }
 
-    public void Replay()
+    public void ResetTimerText()
     {
-        gameController.ChangeGameStatus(GameStatus.START_PLAYING);
+        int timerFormat = timerBehaviour.TotalTime;
+        timerText.text = timerFormat.ToString();
     }
 }

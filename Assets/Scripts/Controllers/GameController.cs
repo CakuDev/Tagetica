@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
 {
     [field: SerializeField] UnityEvent onStarting;
     [field: SerializeField] UnityEvent onStartPlaying;
-    [field: SerializeField] UnityEvent onPaused;
     [field: SerializeField] UnityEvent onResumePlaying;
+    [field: SerializeField] UnityEvent onEndingGame;
     [field: SerializeField] UnityEvent onEndGame;
 
     private GameStatus gameStatus;
@@ -24,11 +24,8 @@ public class GameController : MonoBehaviour
             case GameStatus.START_PLAYING:
                 onStartPlaying?.Invoke();
                 break;
-            case GameStatus.PAUSED:
-                onPaused?.Invoke();
-                break;
-            case GameStatus.RESUME_PLAYING:
-                onResumePlaying?.Invoke();
+            case GameStatus.ENDING_GAME:
+                onEndingGame?.Invoke();
                 break;
             case GameStatus.END_GAME:
                 onEndGame?.Invoke();

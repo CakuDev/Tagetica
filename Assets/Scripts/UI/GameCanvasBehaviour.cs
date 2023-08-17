@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuController : MonoBehaviour
+public class GameCanvasBehaviour : MonoBehaviour
 {
     [SerializeField] private GameController gameController;
 
     public void StartGame()
     {
-        // TODO: Change to starting when the counter is added
         gameController.ChangeGameStatus(GameStatus.START_PLAYING);
+    }
+
+    public void EndGame()
+    {
+        gameController.ChangeGameStatus(GameStatus.END_GAME);
     }
 }

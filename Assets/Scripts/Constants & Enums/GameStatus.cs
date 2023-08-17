@@ -7,7 +7,6 @@ public enum GameStatus
     OUT_OF_GAME,
     STARTING,
     START_PLAYING,
-    PAUSED,
-    RESUME_PLAYING,
+    ENDING_GAME,
     END_GAME
 }
