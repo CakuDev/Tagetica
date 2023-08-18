@@ -15,7 +15,18 @@ public class TargetBehaviour : MonoBehaviour
         collision.gameObject.TryGetComponent<ShotBehaviour>(out ShotBehaviour shotBehaviour);
         if (shotBehaviour != null)
         {
+            shotBehaviour.onTarget = true;
             shotBehaviour.InitShot();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // Check if the pointer has entered the target
+        collision.gameObject.TryGetComponent<ShotBehaviour>(out ShotBehaviour shotBehaviour);
+        if (shotBehaviour != null)
+        {
+            shotBehaviour.onTarget = false;
         }
     }
 

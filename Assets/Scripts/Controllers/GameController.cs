@@ -13,6 +13,11 @@ public class GameController : MonoBehaviour
 
     private GameStatus gameStatus;
 
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     public void ChangeGameStatus(GameStatus newGameStatus)
     {
         gameStatus = newGameStatus;

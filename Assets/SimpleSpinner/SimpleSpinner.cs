@@ -25,9 +25,28 @@ namespace Assets.SimpleSpinner
         
         private Image _image;
         private float _period;
+        private float time;
+
+        public void Init()
+        {
+            time = 5f;
+            _period = 0;
+            Rotation = true;
+        }
+
+        public void ResetRotation()
+        {
+            transform.localEulerAngles = Vector3.zero;
+        }
+
+        public void Stop()
+        {
+            Rotation = false;
+        }
 
         public void Start()
         {
+            time = 0;
             _image = GetComponent<Image>();
             _period = RandomPeriod ? Random.Range(0f, 1f) : 0;
         }
@@ -36,7 +55,8 @@ namespace Assets.SimpleSpinner
         {
             if (Rotation)
             {
-                transform.localEulerAngles = new Vector3(0, 0, -360 * RotationAnimationCurve.Evaluate((RotationSpeed * Time.time + _period) % 1));
+                time += Time.deltaTime;
+                transform.localEulerAngles = new Vector3(0, 0, -360 * RotationAnimationCurve.Evaluate((RotationSpeed * time + _period) % 1));
             }
 
             if (Rainbow)

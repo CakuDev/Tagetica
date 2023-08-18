@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TwitchChat;
+using TMPro;
 
 public class PointerMovementBehaviour : MonoBehaviour
 {
     [SerializeField] private float speed = 25f;
     [SerializeField] private Rigidbody2D pointerRb;
+    [SerializeField] private TextMeshProUGUI upText;
+    [SerializeField] private TextMeshProUGUI downText;
+    [SerializeField] private TextMeshProUGUI leftText;
+    [SerializeField] private TextMeshProUGUI rightText;
+    [SerializeField] private TextMeshProUGUI stopText;
 
     // Counters for each input. Increase when an user send a message in chat
     private readonly Dictionary<string, int> inputCounters = new()
@@ -22,39 +28,49 @@ public class PointerMovementBehaviour : MonoBehaviour
     private Vector3 direction = Vector3.zero;
     private bool shouldMove = false;
 
-    private void OnDestroy()
-    {
-        TwitchController.onTwitchMessageReceived -= CheckInputsOnMessage;
-    }
+    //private void Update()
+    //{
+    //    if (shouldMove) MovePointer();
+    //}
 
-    private void FixedUpdate()
+    public void TestMove()
     {
-        if (shouldMove) MovePointer();
+        if (shouldMove)
+        {
+            CalculateNewDirection();
+            pointerRb.AddForce(speed * direction, ForceMode2D.Impulse);
+        }
     }
 
     private void CheckInputsOnMessage(Chatter chatter)
     {
         string message = chatter.message.ToLower();
-        if (message.Equals("u"))
+        if (message.Equals("w"))
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Up);
         }
-        if (message.Equals("d"))
+        if (message.Equals("s"))
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Down);
         }
-        if (message.Equals("l"))
+        if (message.Equals("a"))
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Left);
         }
-        if (message.Equals("r"))
+        if (message.Equals("d"))
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Right);
         }
-        if (message.Equals("s"))
+        if (message.Equals("f"))
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Stop);
         }
+
+        upText.text = inputCounters[Direction.Up].ToString();
+        downText.text = inputCounters[Direction.Down].ToString();
+        leftText.text = inputCounters[Direction.Left].ToString();
+        rightText.text = inputCounters[Direction.Right].ToString();
+        stopText.text = inputCounters[Direction.Stop].ToString();
     }
 
     private void AddInputCounterValue(string username, string newInput)
@@ -107,15 +123,19 @@ public class PointerMovementBehaviour : MonoBehaviour
         return percentage;
     }
 
-    private void MovePointer()
-    {
-        pointerRb.AddForce(speed * Time.deltaTime * direction, ForceMode2D.Impulse);
-    }
-
     public void EnableMovement()
     {
         TwitchController.onTwitchMessageReceived += CheckInputsOnMessage;
         shouldMove = true;
+    }
+
+    public void ResetCounterTexts()
+    {
+        upText.text = "0";
+        downText.text = "0";
+        rightText.text = "0";
+        leftText.text = "0";
+        downText.text = "0";
     }
 
     public void DisableMovement()

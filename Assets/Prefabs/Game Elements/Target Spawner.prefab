@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6b90935dbec524fa0c8cbb8331284b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTime: 15
+  <TotalTime>k__BackingField: 35
   onTimerDecreasing:
     m_PersistentCalls:
       m_Calls: []
