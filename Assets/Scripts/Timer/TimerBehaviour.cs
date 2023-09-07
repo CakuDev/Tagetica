@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TimerBehaviour : MonoBehaviour
 {
-    [field: SerializeField] public int TotalTime { get; private set; } = 120;
+    [field: SerializeField] public float TotalTime { get; private set; } = 120;
     [SerializeField] private UnityEvent<float> onTimerDecreasing;
     [SerializeField] private UnityEvent onEndTimer;
 
@@ -42,5 +42,18 @@ public class TimerBehaviour : MonoBehaviour
     public void ResumeTimer()
     {
         isTimerActive = true;
+    }
+
+    // value format: 5s
+    public void ChangeTotalTime(string value)
+    {
+        TotalTime = int.Parse(value.Split("s")[0]);
+    }
+
+    // value format: 2:00
+    public void ChangeTotalTimeFromMinuteFormat(string value)
+    {
+        string[] valueSplit = value.Split(":");
+        TotalTime = int.Parse(valueSplit[1]) + int.Parse(valueSplit[0]) * 60;
     }
 }

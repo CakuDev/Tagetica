@@ -18,7 +18,7 @@ public class AutoReplayBehaviour : MonoBehaviour
 
     public void ResetTimerText()
     {
-        int timerFormat = timerBehaviour.TotalTime;
+        int timerFormat = (int) timerBehaviour.TotalTime;
         timerText.text = timerFormat.ToString();
     }
 }

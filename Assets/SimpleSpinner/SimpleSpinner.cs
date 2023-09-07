@@ -29,7 +29,7 @@ namespace Assets.SimpleSpinner
 
         public void Init()
         {
-            time = 5f;
+            time = 0f;
             _period = 0;
             Rotation = true;
         }
@@ -63,6 +63,12 @@ namespace Assets.SimpleSpinner
             {
                 _image.color = Color.HSVToRGB(RainbowAnimationCurve.Evaluate((RainbowSpeed * Time.time + _period) % 1), RainbowSaturation, 1);
             }
+        }
+
+        // value format: 5s
+        public void ChangeTotalTime(string value)
+        {
+            RotationSpeed = 1/float.Parse(value.Split("s")[0]);
         }
     }
 }

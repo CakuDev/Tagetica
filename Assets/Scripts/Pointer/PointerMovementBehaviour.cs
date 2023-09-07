@@ -12,7 +12,6 @@ public class PointerMovementBehaviour : MonoBehaviour
     [SerializeField] private TextMeshProUGUI downText;
     [SerializeField] private TextMeshProUGUI leftText;
     [SerializeField] private TextMeshProUGUI rightText;
-    [SerializeField] private TextMeshProUGUI stopText;
 
     // Counters for each input. Increase when an user send a message in chat
     private readonly Dictionary<string, int> inputCounters = new()
@@ -20,8 +19,7 @@ public class PointerMovementBehaviour : MonoBehaviour
         {Direction.Up, 0},
         {Direction.Down, 0},
         {Direction.Left, 0},
-        {Direction.Right, 0},
-        { Direction.Stop, 0 }
+        {Direction.Right, 0}
     };
     // Dictionary with the current input for each user
     private readonly Dictionary<string, string> usersInput = new();
@@ -38,6 +36,7 @@ public class PointerMovementBehaviour : MonoBehaviour
         if (shouldMove)
         {
             CalculateNewDirection();
+            pointerRb.velocity = Vector2.zero;
             pointerRb.AddForce(speed * direction, ForceMode2D.Impulse);
         }
     }
@@ -61,16 +60,11 @@ public class PointerMovementBehaviour : MonoBehaviour
         {
             AddInputCounterValue(chatter.tags.displayName, Direction.Right);
         }
-        if (message.Equals("f"))
-        {
-            AddInputCounterValue(chatter.tags.displayName, Direction.Stop);
-        }
 
         upText.text = inputCounters[Direction.Up].ToString();
         downText.text = inputCounters[Direction.Down].ToString();
         leftText.text = inputCounters[Direction.Left].ToString();
         rightText.text = inputCounters[Direction.Right].ToString();
-        stopText.text = inputCounters[Direction.Stop].ToString();
     }
 
     private void AddInputCounterValue(string username, string newInput)
@@ -150,5 +144,12 @@ public class PointerMovementBehaviour : MonoBehaviour
         inputCounters[Direction.Down] = 0;
         inputCounters[Direction.Left] = 0;
         inputCounters[Direction.Right] = 0;
+    }
+
+    public void ChangeMovementForce(string value)
+    {
+        if (value == "Low") speed = 4;
+        if (value == "Medium") speed = 6;
+        if (value == "High") speed = 8;
     }
 }

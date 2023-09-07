@@ -12,7 +12,7 @@ public class TimerController : MonoBehaviour
     public void UpdateTimerText(float timer)
     {
         // Int value used to avoid 1:60 format
-        int timerFormat = (int) timer;
+        int timerFormat = (int) (timer + 0.99f);
         timerText.text = $"{timerFormat / 60}:{timerFormat % 60:00}";
     }
 
@@ -23,7 +23,7 @@ public class TimerController : MonoBehaviour
 
     public void ResetTimerText()
     {
-        int timerFormat = timerBehaviour.TotalTime;
+        int timerFormat = (int) (timerBehaviour.TotalTime + 0.99f);
         timerText.text = $"{timerFormat / 60}:{timerFormat % 60:00}";
     }
 }

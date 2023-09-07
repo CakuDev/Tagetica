@@ -8,6 +8,9 @@ public class ShotBehaviour : MonoBehaviour
     [SerializeField] private Collider2D pointerCollider;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject plus10;
+    [SerializeField] private GameObject plus20;
+    [SerializeField] private GameObject plus30;
 
     private bool canShoot = true;
     public bool onTarget { get; set; } = false;
@@ -29,6 +32,7 @@ public class ShotBehaviour : MonoBehaviour
             onTarget = false;
             int points = targetBehaviour.OnHit(transform.position);
             scoreController.UpdateScore(points);
+            ShowPoints(points);
         }
         animator.Play("Reload");
     }
@@ -37,5 +41,14 @@ public class ShotBehaviour : MonoBehaviour
     {
         canShoot = true;
         InitShot();
+    }
+
+    private void ShowPoints(int points)
+    {
+        // Instantiate the according sprite above the pointer
+        Vector3 position = transform.position + new Vector3(0f, 0.75f, 0f);
+        if (points == 10) Instantiate(plus10, position, plus10.transform.rotation);
+        if (points == 20) Instantiate(plus20, position, plus10.transform.rotation);
+        if (points == 30) Instantiate(plus30, position, plus10.transform.rotation);
     }
 }
